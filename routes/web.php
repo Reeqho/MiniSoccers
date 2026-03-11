@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+Route::resource('fields', FieldController::class);
+Route::resource('bookings', BookingController::class);
+Route::post('/payments', [PaymentController::class, 'store']);

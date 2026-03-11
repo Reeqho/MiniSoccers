@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained()->cascadeOnDelete();
-            $table->string('method');
-            $table->integer('amount');
-            $table->enum('status', ['pending', 'success', 'failed']);
-            $table->timestamps();
-        });
+        $table->id();
+        $table->foreignId('booking_id')->constrained()->cascadeOnDelete();
+        $table->string('method');
+        $table->integer('amount');
+        $table->enum('status',['pending','success','failed']);
+        $table->timestamps();
+    });
     }
 
     /**

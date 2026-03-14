@@ -291,6 +291,9 @@ body {
 }
 
 .footer {
+    /* position: fixed;
+    width: 100%; */
+    bottom: 0;
     background: #0f172a;
     color: #94a3b8;
     padding: 60px 0 0;

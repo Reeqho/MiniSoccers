@@ -12,8 +12,9 @@ class FieldController extends Controller
      */
     public function index()
     {
-        $fields = Field::all();
-        return view('fields.index', compact('fields'));
+        // $fields = Field::all();
+        // return view('fields.index', compact('fields'));
+        return view('fields.index');
     }
 
     /**

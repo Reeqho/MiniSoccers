@@ -1,8 +1,4 @@
-<h1>
-    Daftar Lapangan
-</h1>
-
-
-    <div>
-        <h2>test</h2>
-    </div>
+@extends('layouts.master')
+@section('content')
+    <h1>ini adalah halaman field</h1>
+@endsection

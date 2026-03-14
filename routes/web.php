@@ -17,8 +17,9 @@ use App\Http\Controllers\PaymentController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('home');
 });
 Route::resource('fields', FieldController::class);
 Route::resource('bookings', BookingController::class);
 Route::post('/payments', [PaymentController::class, 'store']);
+

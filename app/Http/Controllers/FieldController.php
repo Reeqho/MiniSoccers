@@ -13,7 +13,7 @@ class FieldController extends Controller
     public function index()
     {
         $fields = Field::paginate(10);
-        return view('fields.index', compact('fields'));
+        return view('admin.fields.index', compact('fields'));
     }
 
     /**
@@ -22,6 +22,7 @@ class FieldController extends Controller
     public function create()
     {
         //
+        return view('admin.fields.create');
     }
 
     /**
@@ -29,7 +30,17 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // store
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'price_per_hour' => 'required|numeric|min:0',
+            'description' => 'nullable',
+        ]);
+
+        Field::create($request->all());
+        // redirect with success message
+        return redirect()->route('fields.index')->with('success', 'Field created successfully.');
     }
 
     /**
@@ -43,24 +54,48 @@ class FieldController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Field $field)
+    public function edit(int $id)
     {
-        //
+        // edit
+        $field = Field::findOrfail($id);
+        return view('admin.fields.edit', compact('field'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Field $field)
+    public function update(Request $request, int $id)
     {
-        //
+        // update
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'price_per_hour' => 'required|numeric|min:0',
+            'description' => 'nullable',
+        ]);
+        $field = Field::findOrfail($id);
+        $field->update($request->all());
+        // redirect with success message
+        if ($field) {
+            return redirect()->route('fields.index')->with('success', 'Field updated successfully.');
+        } else {
+            return redirect()->route('fields.index')->with('error', 'Failed to update field.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Field $field)
+    public function destroy(int $id)
     {
-        //
+        // destroy
+        $field = Field::findOrfail($id);
+        $deleted = $field->delete();
+        // redirect with success message
+        if ($deleted) {
+            return redirect()->route('fields.index')->with('success', 'Field deleted successfully.');
+        } else {
+            return redirect()->route('fields.index')->with('error', 'Failed to delete field.');
+        }
     }
 }

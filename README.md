@@ -1,13 +1,13 @@
-ini pake laravel + tailwindCss👍
-
-ritualnya : 
-npm install
-composer install
-copy .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
-
-running : 
-npm run dev (terminal 1)
-php artisan serve (terminal 2)
+ini pake laravel + tailwindCss👍 <br/>
+<br/>
+ritualnya : <br/> 
+npm install <br/>
+composer install <br/>
+copy .env.example .env <br/>
+php artisan key:generate <br/>
+php artisan migrate <br/>
+php artisan db:seed <br/>
+<br/>
+running : <br/>
+npm run dev (terminal 1) <br/>
+php artisan serve (terminal 2) <br/>

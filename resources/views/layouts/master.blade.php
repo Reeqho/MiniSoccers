@@ -1,3 +1,4 @@
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <!DOCTYPE html>
 <html lang="id">
 
@@ -15,13 +16,17 @@
         @include('layouts.navbar')
     </nav>
     {{-- content --}}
-    <main class="main-content">
+
+    <main class="{{ request()->is('/') ? 'main-content-home' : 'main-content' }}">
         @yield('content')
     </main>
     {{-- footer --}}
-    <footer class="footer" >
-        @include('layouts.footer')
-    </footer>
+    <div class="push">
+        <footer class="footer">
+            @include('layouts.footer')
+        </footer>
+    </div>
+
 </body>
 
 </html>

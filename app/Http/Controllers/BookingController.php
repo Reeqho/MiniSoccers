@@ -13,7 +13,8 @@ class BookingController extends Controller
     public function index()
     {
         //
-        return view('bookings.index');
+        $bookings = Booking::with(['user', 'field'])->latest()->paginate(5);
+        return view('bookings.index', compact('bookings'));
     }
 
     /**

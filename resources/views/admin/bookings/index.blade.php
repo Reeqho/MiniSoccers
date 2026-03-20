@@ -7,6 +7,17 @@
 
         {{-- Search --}}
         <input type="text" placeholder="Cari..." class="mb-4 px-4 py-2 border rounded-lg w-full md:w-1/3">
+        {{-- Message --}}
+        @if (session('success'))
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @elseif (session('error'))
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
 
         <!-- Table -->
         <div class="overflow-x-auto">
@@ -80,14 +91,23 @@
 
                             <!-- Aksi -->
                             <td class="px-6 py-4 text-center space-x-2">
-                                <a href="#"
+                                <a href="{{ route('bookings.show', $booking->id) }}"
                                     class="px-3 py-1 text-xs text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                     Detail
                                 </a>
-                                <a href="#"
+                                <form id="delete-form" action="{{ route('bookings.destroy', $booking->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="px-3 py-1 text-xs text-white bg-red-500 rounded-lg hover:bg-red-600"
+                                        onclick="return confirm('Are you sure you want to delete this booking?')">
+                                        Hapus </button>
+                                </form>
+                                {{-- <a href="#"
                                     class="px-3 py-1 text-xs text-white bg-red-500 rounded-lg hover:bg-red-600">
                                     Hapus
-                                </a>
+                                </a> --}}
                             </td>
                         </tr>
                     @endforeach

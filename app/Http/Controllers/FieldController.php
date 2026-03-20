@@ -12,7 +12,7 @@ class FieldController extends Controller
      */
     public function index()
     {
-        $fields = Field::paginate(10);
+        $fields = Field::paginate(5);
         return view('admin.fields.index', compact('fields'));
     }
 

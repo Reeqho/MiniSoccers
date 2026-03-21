@@ -8,6 +8,7 @@ use App\Models\Field;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => "admin123",
+            'password' => Hash::make('admin123'),
             'role' => 'admin'
         ]);
 

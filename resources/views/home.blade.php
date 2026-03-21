@@ -1,5 +1,11 @@
 @extends('layouts.master')
 @section('content')
+{{-- cek session role --}}
+@if(session('role') === 'admin')
+    <p>Welcome, Admin!</p>
+@else
+    <p>Welcome, Customer!</p>
+@endif
 <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">

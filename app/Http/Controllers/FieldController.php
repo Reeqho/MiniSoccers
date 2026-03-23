@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class FieldController extends Controller
 {
+
+// Admin
     /**
      * Display a listing of the resource.
      */
@@ -102,5 +104,15 @@ class FieldController extends Controller
         } else {
             return redirect()->route('fields.index')->with('error', 'Failed to delete field.');
         }
+    }
+
+
+    // Customers
+
+    public function list()
+    {
+        // list
+        $fields = Field::all();
+        return view('customers.fields.index', compact('fields'));
     }
 }

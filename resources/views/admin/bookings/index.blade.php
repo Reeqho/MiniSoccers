@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-admin')
 @section('content')
     <div class="p-6 bg-white shadow-md rounded-2xl">
 

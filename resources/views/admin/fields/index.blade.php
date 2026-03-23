@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-admin')
 @section('content')
     <div class="p-6 bg-white rounded-2xl shadow-md">
         {{-- success message --}}

@@ -1,19 +1,21 @@
 @extends('layouts.master')
 @section('content')
-    <div class="p-6 bg-white rounded-2xl shadow-md">
+    <div class="p-6 bg-white shadow-md rounded-2xl">
 
         <!-- Title -->
-        <h2 class="text-xl font-bold mb-4">Data Booking</h2>
+        <h2 class="mb-4 text-xl font-bold">Data Booking</h2>
 
         {{-- Search --}}
-        <input type="text" placeholder="Cari..." class="mb-4 px-4 py-2 border rounded-lg w-full md:w-1/3">
+        <form action="{{ route('bookings.index') }}" method="GET" class="mb-4">
+            <input type="text" name="search" placeholder="Cari..." class="w-full px-4 py-2 border rounded-lg md:w-1/3" value="{{ request('search') }}">
+        </form>
         {{-- Message --}}
         @if (session('success'))
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+            <div class="p-3 mb-4 text-green-700 bg-green-100 rounded">
                 {{ session('success') }}
             </div>
         @elseif (session('error'))
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            <div class="p-3 mb-4 text-red-700 bg-red-100 rounded">
                 {{ session('error') }}
             </div>
         @endif
@@ -24,7 +26,7 @@
             <table class="min-w-full text-sm text-left text-gray-600">
 
                 <!-- Header -->
-                <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
                         <th class="px-6 py-3">User</th>
                         <th class="px-6 py-3">Lapangan</th>
@@ -40,7 +42,7 @@
                 <tbody class="divide-y">
 
                     @foreach ($bookings as $booking)
-                        <tr class="hover:bg-gray-50 transition">
+                        <tr class="transition hover:bg-gray-50">
 
                             <!-- User -->
                             <td class="px-6 py-4 font-medium text-gray-900">
@@ -90,13 +92,13 @@
                             </td>
 
                             <!-- Aksi -->
-                            <td class="px-6 py-4 text-center space-x-2">
+                            <td class="px-6 py-4 space-x-2 text-center">
                                 <a href="{{ route('bookings.show', $booking->id) }}"
                                     class="px-3 py-1 text-xs text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                     Detail
                                 </a>
-                                <form id="delete-form" action="{{ route('bookings.destroy', $booking->id) }}" method="POST"
-                                    class="inline">
+                                <form id="delete-form" action="{{ route('bookings.destroy', $booking->id) }}"
+                                    method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

@@ -4,10 +4,11 @@
         <!-- Card -->
         <div class="bg-white shadow-lg rounded-2xl p-6">
 
+
             <!-- Header -->
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Detail Booking</h2>
-
+                <h2 class="text-2xl font-bold">
+                    Detail Booking</h2>
                 <span
                     class="px-4 py-1 text-sm font-semibold rounded-full
         @if ($booking->status == 'pending') bg-yellow-100 text-yellow-700
@@ -106,7 +107,8 @@
                     Edit
                 </a>
                 {{-- hapus --}}
-                <form id="delete-form" action="{{ route('bookings.destroy', $booking->id) }}" method="POST" class="inline">
+                <form id="delete-form" action="{{ route('bookings.destroy', $booking->id) }}" method="POST"
+                    class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"

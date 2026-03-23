@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Field;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookingController extends Controller
 {
@@ -14,8 +15,21 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
-        $bookings = Booking::with(['user', 'field'])->latest()->paginate(5);
+        // index
+        // search
+        /** @var LengthAwarePaginator $bookings */
+        $search = request('search');
+
+        $bookings = Booking::with(['user', 'field'])
+            ->when($search, function ($query, $search) {
+                return $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })->orWhereHas('field', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->latest()->paginate(5)->withQueryString();
+
         return view('admin.bookings.index', compact('bookings'));
     }
 
@@ -43,6 +57,7 @@ class BookingController extends Controller
         // show
         $booking = Booking::findOrFail($id);
         $booking->load(['user', 'field']);
+
         return view('admin.bookings.detail', compact('booking'));
     }
 
@@ -55,6 +70,7 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $users = User::all();
         $fields = Field::all();
+
         return view('admin.bookings.edit', compact('booking', 'users', 'fields'));
     }
 
@@ -74,6 +90,7 @@ class BookingController extends Controller
         ]);
         $booking = Booking::findOrFail($id);
         $booking->update($request->all());
+
         // redirect with success message
         return redirect()->route('bookings.index')->with('success', 'Booking updated successfully.');
     }
@@ -87,7 +104,7 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $deleted = $booking->delete();
         // redirect with success message
-        if($deleted) {
+        if ($deleted) {
             return redirect()->route('bookings.index')->with('success', 'Booking deleted successfully.');
         } else {
             return redirect()->route('bookings.index')->with('error', 'Failed to delete booking.');

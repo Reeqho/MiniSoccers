@@ -27,10 +27,11 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role == "admin") {
                 session(['role' => 'admin']);
+                return redirect()->intended('/dashboard');
             } else {
                 session(['role' => 'customer']);
+                return redirect()->intended('/');
             }
-            return redirect()->intended('/');
         }
 
         return back()->withErrors([

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-admin')
 @section('content')
     <div class="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
         <h1 class="text-2xl font-bold mb-6 text-gray-700">

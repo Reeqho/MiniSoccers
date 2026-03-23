@@ -18,7 +18,9 @@
         </div>
 
         {{-- Search --}}
-        <input type="text" placeholder="Cari..." class="mb-4 px-4 py-2 border rounded-lg w-full md:w-1/3">
+        <form action="{{ route('fields.index') }}" method="GET" class="mb-4">
+            <input type="text" name="search" placeholder="Cari..." class="px-4 py-2 border rounded-lg w-full md:w-1/3" value="{{ request('search') }}">
+        </form>
 
         <!-- Table -->
         <div class="overflow-x-auto">
@@ -76,7 +78,6 @@
                                     </button>
                                 </form>
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>

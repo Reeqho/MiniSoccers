@@ -12,7 +12,12 @@ class FieldController extends Controller
      */
     public function index()
     {
-        $fields = Field::paginate(5);
+        // index
+        // search
+        $search = request('search');
+        $fields = Field::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })->paginate(5)->withQueryString();
         return view('admin.fields.index', compact('fields'));
     }
 

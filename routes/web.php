@@ -39,6 +39,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings/create/{field}', [BookingController::class, 'createBooking'])->name('user.bookings.create');
     Route::post('/bookings/store/{field}', [BookingController::class, 'storeBooking'])->name('user.booking.store');
     Route::get('/bookings/check/{field}', [BookingController::class, 'check'])->name('user.bookings.check');
+    Route::get('/booking-history', [BookingController::class, 'bookingHistory'])->name('user.bookings.history');
+
+    // payment
+    Route::get('/payment/{booking}', [PaymentController::class, 'create'])->name('user.booking.payment');
+    Route::post('/payment/{booking}', [PaymentController::class, 'store'])
+        ->name('user.payments.store');
 });
 
 // Admin

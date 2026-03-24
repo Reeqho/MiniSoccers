@@ -30,8 +30,14 @@
                 <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden">
 
                     <!-- Image -->
-                    <img src="{{ $field->image ? asset('storage/' . $field->image) : 'https://via.placeholder.com/400x200' }}"
-                        class="w-full h-40 object-cover">
+                    @if ($field->image)
+                        <img src="{{ asset('storage/'. $field->image) }}" alt="Gambar Lapangan"
+                            class="w-full h-48 object-cover">
+                    @else
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                            <span class="text-gray-500">No Image</span>
+                        </div>
+                    @endif
 
                     <!-- Content -->
                     <div class="p-4">

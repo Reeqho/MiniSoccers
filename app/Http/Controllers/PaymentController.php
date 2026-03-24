@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -18,17 +19,41 @@ class PaymentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($bookingId)
     {
-        //
+        $booking = Booking::where('user_id', auth()->id())
+            ->findOrFail($bookingId);
+
+        return view('customers.bookings.booking-payment', compact('booking'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $bookingId)
     {
-        //
+        $booking = Booking::where('user_id', auth()->id())
+            ->findOrFail($bookingId);
+
+        // upload bukti
+        if ($request->hasFile('proof')) {
+            $proof = $request->file('proof')->store('payments', 'public');
+        }
+
+        // dd($request->all(), $proof);
+
+        Booking::where('id', $bookingId)->update(['status' => 'paid']);
+
+        Payment::create([
+            'booking_id' => $booking->id,
+            'method' => $request->payment_method,
+            'amount' => $booking->total_price,
+            'status' => 'pending',
+            'proof' => $proof ?? null,
+        ]);
+
+        return redirect()->route('user.bookings.history')
+            ->with('success', 'Pembayaran dikirim, menunggu verifikasi');
     }
 
     /**

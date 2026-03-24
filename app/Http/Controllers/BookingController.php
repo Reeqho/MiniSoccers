@@ -150,13 +150,9 @@ class BookingController extends Controller
         // cek jadwal bentrok
         $exists = Booking::where('field_id', $request->field_id)
             ->where('date', $request->date)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('start_time', [$request->start_time, $request->end_time])
-                    ->orWhereBetween('end_time', [$request->start_time, $request->end_time])
-                    ->orWhere(function ($q) use ($request) {
-                        $q->where('start_time', '<=', $request->start_time)
-                            ->where('end_time', '>=', $request->end_time);
-                    });
+            ->where(function ($q) use ($request) {
+                $q->where('start_time', '<', $request->end_time)
+                    ->where('end_time', '>', $request->start_time);
             })
             ->exists();
 
@@ -186,7 +182,7 @@ class BookingController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('field.list')
+        return redirect()->route('user.bookings.history')
             ->with('success', 'Booking berhasil!');
     }
 
@@ -198,4 +194,42 @@ class BookingController extends Controller
 
         return response()->json($bookings);
     }
+
+    public function bookingHistory()
+    {
+        $bookings = Booking::with('field')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('customers.bookings.booking-history', compact('bookings'));
+    }
+
+    // public function bookingPayment($id)
+    // {
+    //     $booking = Booking::with('field')
+    //         ->where('user_id', auth()->id())
+    //         ->findOrFail($id);
+
+    //     return view('customers.bookings.booking-payment', compact('booking'));
+    // }
+
+    // public function bookingPaymentStore(Request $request, $id)
+    // {
+    //     $booking = Booking::where('user_id', auth()->id())
+    //         ->findOrFail($id);
+
+    //     // upload bukti
+    //     if ($request->hasFile('proof')) {
+    //         $proof = $request->file('proof')->store('payments', 'public');
+    //     }
+
+    //     $booking->update([
+    //         'status' => 'paid',
+    //         'payment_proof' => $proof ?? null,
+    //     ]);
+
+    //     return redirect()->route('user.booking.history')
+    //         ->with('success', 'Pembayaran berhasil dikirim!');
+    // }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
         $table->string('type');
         $table->integer('price_per_hour');
         $table->text('description')->nullable();
+        $table->string('image')->nullable();
         $table->timestamps();
     });
     }

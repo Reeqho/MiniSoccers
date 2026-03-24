@@ -70,6 +70,10 @@
                                     class="px-3 py-1 text-xs text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                     Edit
                                 </a>
+                                <a href="{{ route('fields.show', $field->id) }}"
+                                    class="px-3 py-1 text-xs text-white bg-green-500 rounded-lg hover:bg-green-600">
+                                    Detail
+                                </a>
                                 <form action="{{ route('fields.destroy', $field->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')

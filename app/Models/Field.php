@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -11,10 +13,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property int $price_per_hour
  * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Booking> $bookings
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Booking> $bookings
  * @property-read int|null $bookings_count
+ *
  * @method static \Database\Factories\FieldFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Field newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Field newQuery()
@@ -26,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Field wherePricePerHour($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Field whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Field whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Field extends Model
@@ -36,7 +40,8 @@ class Field extends Model
         'name',
         'type',
         'price_per_hour',
-        'description'
+        'description',
+        'image',
     ];
 
     public function bookings()

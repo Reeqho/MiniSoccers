@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        <form action="{{ route('fields.update', $field->id) }}" method="POST">
+        <form action="{{ route('fields.update', $field->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -55,6 +55,16 @@
                 <label class="block mb-2 font-semibold">Deskripsi</label>
                 <textarea name="description" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-green-400" rows="3"
                     placeholder="Deskripsi lapangan">{{ old('description', $field->description) }}</textarea>
+            </div>
+
+            {{-- Gambar --}}
+            <div class="mb-4">
+                <label class="block mb-2 font-semibold">Gambar Lapangan</label>
+                <input type="file" name="image" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-green-400">
+                @if ($field->image)
+                    <p class="text-sm text-gray-500 mt-1">Gambar saat ini:</p>
+                    <img src="{{ asset('storage/' . $field->image) }}" alt="Gambar Lapangan" class="w-32 h-32 object-cover mt-2">
+                @endif
             </div>
 
             {{-- Tombol --}}

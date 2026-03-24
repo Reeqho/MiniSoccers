@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class FieldController extends Controller
 {
-
-// Admin
+    // Admin
     /**
      * Display a listing of the resource.
      */
@@ -20,6 +19,7 @@ class FieldController extends Controller
         $fields = Field::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%");
         })->paginate(5)->withQueryString();
+
         return view('admin.fields.index', compact('fields'));
     }
 
@@ -38,14 +38,31 @@ class FieldController extends Controller
     public function store(Request $request)
     {
         // store
+
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('fields', 'public');
+            // $request->merge(['image' => $image]);
+        }
+
         $request->validate([
             'name' => 'required',
             'type' => 'required',
             'price_per_hour' => 'required|numeric|min:0',
             'description' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Field::create($request->all());
+        Field::create([
+            'name' => $request->name,
+            'type' => $request->type,
+            'price_per_hour' => $request->price_per_hour,
+            'description' => $request->description,
+            'image' => $image
+
+            ?? null,
+        ]);
+
         // redirect with success message
         return redirect()->route('fields.index')->with('success', 'Field created successfully.');
     }
@@ -53,9 +70,19 @@ class FieldController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Field $field)
+    public function show($id, Request $request)
     {
-        //
+        // detail
+        $field = Field::findOrfail($id);
+        // search
+        $search = $request->get('search');
+        $bookings = $field->bookings()->with('user')->when($search, function ($query, $search) {
+            return $query->whereHas('user', function ($subQuery) use ($search) {
+                $subQuery->where('name', 'like', "%{$search}%");
+            });
+        })->paginate(5)->withQueryString();
+
+        return view('admin.fields.detail', compact('field', 'bookings'));
     }
 
     /**
@@ -65,6 +92,7 @@ class FieldController extends Controller
     {
         // edit
         $field = Field::findOrfail($id);
+
         return view('admin.fields.edit', compact('field'));
     }
 
@@ -74,14 +102,25 @@ class FieldController extends Controller
     public function update(Request $request, int $id)
     {
         // update
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('fields', 'public');
+        }
         $request->validate([
             'name' => 'required',
             'type' => 'required',
             'price_per_hour' => 'required|numeric|min:0',
             'description' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $field = Field::findOrfail($id);
-        $field->update($request->all());
+        $field->update([
+            'name' => $request->name,
+            'type' => $request->type,
+            'price_per_hour' => $request->price_per_hour,
+            'description' => $request->description,
+            'image' => $image ?? $field->image,
+        ]);
         // redirect with success message
         if ($field) {
             return redirect()->route('fields.index')->with('success', 'Field updated successfully.');
@@ -106,13 +145,13 @@ class FieldController extends Controller
         }
     }
 
-
     // Customers
 
     public function list()
     {
         // list
         $fields = Field::all();
+
         return view('customers.fields.index', compact('fields'));
     }
 }

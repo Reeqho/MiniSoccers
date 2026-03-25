@@ -125,7 +125,9 @@ class BookingController extends Controller
             ->latest()
             ->get();
 
-        return view('customers.fields.index', compact('bookings'));
+            $payment = $bookings->pluck('payment');
+
+        return view('customers.fields.index', compact('bookings', 'payment'));
     }
 
     public function createBooking(int $id)

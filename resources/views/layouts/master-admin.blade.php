@@ -27,6 +27,10 @@
                 <a href="{{ route('fields.index') }}" class="block px-4 py-2 hover:bg-gray-200 rounded-lg">
                     Lapangan
                 </a>
+
+                <a href="{{ route('admin.payments.confirmation') }}" class="block px-4 py-2 hover:bg-gray-200 rounded-lg">
+                    Konfirmasi Pembayaran
+                </a>
             </nav>
         </aside>
 

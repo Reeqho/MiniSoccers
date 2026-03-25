@@ -42,8 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking-history', [BookingController::class, 'bookingHistory'])->name('user.bookings.history');
 
     // payment
-    Route::get('/payment/{booking}', [PaymentController::class, 'create'])->name('user.booking.payment');
-    Route::post('/payment/{booking}', [PaymentController::class, 'store'])
+    Route::get('/payment/{booking}', [PaymentController::class, 'customer_payment'])->name('user.booking.payment');
+    Route::post('/payment/{booking}', [PaymentController::class, 'customer_paymentStore'])
         ->name('user.payments.store');
 });
 
@@ -52,5 +52,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('fields', FieldController::class);
     Route::resource('bookings', BookingController::class);
-    Route::post('/payments', [PaymentController::class, 'store']);
+
+    // payment confirmation
+    Route::get('/payments/confirmation', [PaymentController::class, 'admin_confirmation'])->name('admin.payments.confirmation');
+    Route::post('/payments/{payment}/approve', [PaymentController::class, 'approve'])->name('admin.payments.approve');
+    Route::post('/payments/{payment}/reject', [PaymentController::class, 'reject'])->name('admin.payments.reject');
 });

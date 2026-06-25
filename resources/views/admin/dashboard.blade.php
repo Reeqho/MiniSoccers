@@ -43,7 +43,7 @@
                 </tr>
             </thead>
 
-            <tbody class="divide-y">
+            <tbody class="divide-y text-center">
                 @foreach($recentBookings as $booking)
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2">{{ $booking->user->name }}</td>

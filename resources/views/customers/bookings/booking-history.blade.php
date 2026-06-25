@@ -21,7 +21,7 @@
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm text-gray-600">
 
-                    <thead class="bg-gray-100 text-xs uppercase">
+                    <thead class="bg-blue-200 text-xs uppercase">
                         <tr>
                             <th class="px-4 py-3">Lapangan</th>
                             <th class="px-4 py-3">Tanggal</th>
@@ -91,7 +91,7 @@
                                 <!-- Aksi -->
                                 <td class="px-4 py-3 text-center">
 
-                                    @if ($booking->status == 'pending')
+                                    @if ($booking->payment == null)
                                         <a href="{{ route('user.booking.payment', $booking->id) }}"
                                             class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs">
                                             Bayar

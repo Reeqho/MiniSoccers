@@ -10,6 +10,11 @@
             Booking: {{ $field->name }}
         </h2>
 
+        {{-- image --}}
+        <div class="mb-4">
+            <img src="{{ asset('storage/' . $field->image) }}" alt="{{ $field->name }}" class="w-full h-48 object-cover rounded-lg">
+        </div>
+
         {{-- error --}}
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">

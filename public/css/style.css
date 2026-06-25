@@ -18,8 +18,10 @@ body {
 
 /* Main content */
 .main-content {
-    padding: 40px 0;
+    background: #f0f4f8;
+    padding: 10px 0;
     min-height: 100%;
+    text-align: center;
     /* margin: 0 auto -50px; */
     flex: 1;
 }

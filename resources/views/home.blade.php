@@ -2,11 +2,11 @@
 @section('title', 'Home')
 @section('content')
 {{-- cek session role --}}
-@if(auth()->check() && auth()->user()->role == 'admin' && session('role') === 'admin')
+{{-- @if(auth()->check() && auth()->user()->role == 'admin' && session('role') === 'admin')
     <p>Welcome, Admin!</p>
 @else
     <p>Welcome, Customer!</p>
-@endif
+@endif --}}
 <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">

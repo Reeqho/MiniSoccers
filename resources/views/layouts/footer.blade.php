@@ -8,8 +8,8 @@
             <h4>Menu</h4>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/fields">Lapangan</a></li>
-                <li><a href="/bookings">Booking</a></li>
+                <li><a href="{{ route('field.list') }}">Booking Lapangan</a></li>
+                <li><a href="{{ route('user.bookings.history') }}">Riwayat Booking</a></li>
             </ul>
         </div>
         <div class="footer-contact">

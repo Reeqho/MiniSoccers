@@ -1,4 +1,5 @@
 @extends('layouts.master-admin')
+@section('title', 'Booking')
 @section('content')
     <div class="p-6 bg-white shadow-md rounded-2xl">
 

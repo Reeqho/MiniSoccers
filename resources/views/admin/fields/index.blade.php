@@ -1,4 +1,6 @@
 @extends('layouts.master-admin')
+@section('title', 'Lapangan')
+
 @section('content')
     <div class="p-6 bg-white rounded-2xl shadow-md">
         {{-- success message --}}
